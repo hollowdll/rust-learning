@@ -33,8 +33,15 @@ fn array_example() {
     println!("End");
 }
 
+fn return_example(mut my_string: String) -> String {
+    my_string.push_str(" from Rust!");
+    my_string
+}
+
 fn main() {
     // variable_example(8);
     // tuple_example();
-    array_example();
+    // array_example();
+    let my_string = return_example(String::from("Hello"));
+    println!("{}", my_string);
 }
