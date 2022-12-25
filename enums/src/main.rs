@@ -91,14 +91,15 @@ fn main() {
     let _none = plus_one(None);
     println!("{:?}", five);
 
-    // With if let
     let ten = Some(10u8);
-
+    
+    // With match
     match ten {
         Some(num) => println!("num is {}", num),
         _ => (),
     }
-
+    
+    // With if let
     if let Some(num) = ten {
         println!("num is {}", num);
     }
