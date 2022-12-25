@@ -90,4 +90,10 @@ fn main() {
     let _six = plus_one(five);
     let _none = plus_one(None);
     println!("{:?}", five);
+
+    // With if let
+    let ten = Some(10u8);
+    if let Some(num) = ten {
+        println!("num is {}", num);
+    }
 }
