@@ -93,6 +93,12 @@ fn main() {
 
     // With if let
     let ten = Some(10u8);
+
+    match ten {
+        Some(num) => println!("num is {}", num),
+        _ => (),
+    }
+
     if let Some(num) = ten {
         println!("num is {}", num);
     }
