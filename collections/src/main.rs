@@ -37,7 +37,35 @@ fn vector_example() {
 }
 
 fn string_example() {
+    let mut mutable_string = String::new();
+    let _immutable_string = String::new();
+    let string_literal = "Rust";
+    let from_string_literal_1 = "Hello!".to_string();
+    let from_string_literal_2 = String::from(" foo");
 
+    mutable_string.push_str(string_literal);
+    mutable_string.push('.');
+    println!("{}", mutable_string);
+
+    let combined_string = from_string_literal_1 + &from_string_literal_2;
+    println!("{}", combined_string);
+
+    let my_string_1 = String::from("This");
+    let my_string_2 = String::from("string");
+    let my_string_3 = String::from("is");
+    let my_string_4 = String::from("blazingly");
+    let my_string_5 = String::from("fast");
+
+    // Combine with format! macro
+    let clean_syntax = format!("{} {} {} {} {}!",
+        my_string_1, my_string_2, my_string_3,
+        my_string_4, my_string_5
+    );
+    println!("{}", clean_syntax);
+
+    let string_slice = &clean_syntax[5..11];
+    // Prints "string"
+    println!("{}", string_slice);
 }
 
 fn hashmap_example() {
@@ -45,5 +73,6 @@ fn hashmap_example() {
 }
 
 fn main() {
-    vector_example();
+    //vector_example();
+    string_example();
 }
