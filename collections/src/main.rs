@@ -69,10 +69,39 @@ fn string_example() {
 }
 
 fn hashmap_example() {
+    use std::collections::HashMap;
 
+    let mut scores: HashMap<String, i32> = HashMap::new();
+
+    scores.insert(String::from("Red"), 10);
+    scores.insert(String::from("Blue"), 20);
+
+    // Access a value
+    let team_name = String::from("Blue");
+    let _score = scores.get(&team_name).copied().unwrap_or(0);
+
+    scores.entry(String::from("Yellow")).or_insert(50);
+    scores.entry(String::from("Blue")).or_insert(30);
+
+    // Iterate
+    for (key, value) in scores.iter() {
+        println!("Key: {key}, Value: {value}");
+    }
+
+    let text = "hello hello hi hey";
+
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("{:?}", map);
 }
 
 fn main() {
-    //vector_example();
-    string_example();
+    // vector_example();
+    // string_example();
+    hashmap_example();
 }
