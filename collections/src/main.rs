@@ -100,8 +100,25 @@ fn hashmap_example() {
     println!("{:?}", map);
 }
 
+fn exercise_one() {
+    // Only with an odd number of elements
+    let mut list = vec![6,8,2,5,9,8,7,9,5];
+    let median: usize;
+    let _mode: i32;
+
+    // sort the list
+    list.sort();
+    println!("{:?}", list);
+
+    let length = list.len() as f64;
+    median = (&length / 2.0).floor() as usize;
+
+    println!("The median is {}", &list[median]);
+}
+
 fn main() {
     // vector_example();
     // string_example();
-    hashmap_example();
+    // hashmap_example();
+    exercise_one();
 }
