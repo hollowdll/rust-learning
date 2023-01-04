@@ -111,10 +111,32 @@ impl<X1, Y1> Point2<X1, Y1> {
     }
 }
 
+/*
 fn main() {
     let p1 = Point2 { x: 6, y: 12.7 };
     let p2 = Point2 { x: "Hi", y: 'f' };
     let p3 = p1.mixup(p2);
 
     println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+}
+*/
+
+
+
+//--------//
+// Traits //
+//--------//
+
+// From lib.rs
+use generics::{Summary, Tweet};
+
+fn main() {
+    let tweet = Tweet {
+        username: String::from("rustacean123"),
+        content: String::from("Have a good day!"),
+        reply: false,
+        retweet: true,
+    };
+
+    println!("1 new tweet: {}", tweet.summarize());
 }
