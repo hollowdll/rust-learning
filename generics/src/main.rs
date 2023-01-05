@@ -128,7 +128,11 @@ fn main() {
 //--------//
 
 // From lib.rs
-use generics::{Summary, Tweet};
+use generics::{
+    Summary,
+    Tweet,
+    NewsArticle
+};
 
 fn main() {
     let tweet = Tweet {
@@ -138,5 +142,23 @@ fn main() {
         retweet: true,
     };
 
+    let article = NewsArticle {
+        headline: String::from("Nice article"),
+        location: String::from("Toilet"),
+        author: String::from("Unknown"),
+        content: String::from("Have a nice day!"),
+    };
+
     println!("1 new tweet: {}", tweet.summarize());
+    println!("New article available! {}", article.summarize());
+    println!(
+        "Author of tweet: {}\n\
+        Author of article: {}",
+        tweet.summarize_author(), article.summarize_author()
+    );
+
+    // Formatted output. Implements fmt::Display trait in lib.rs
+    println!("tweet: {}", tweet);
 }
+
+
