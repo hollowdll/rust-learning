@@ -3,6 +3,8 @@
 // When a type implements a trait, methods in the trait
 // will have to be defined with the exact same signature.
 
+use std::fmt;
+
 pub trait Summary {
     fn summarize_author(&self) -> String;
 
@@ -32,7 +34,6 @@ impl Summary for NewsArticle {
     */
 }
 
-
 pub struct Tweet {
     pub username: String,
     pub content: String,
@@ -49,8 +50,6 @@ impl Summary for Tweet {
         format!("{}: {}", self.username, self.content)
     }
 }
-
-use std::fmt;
 
 // Implement custom display format
 impl fmt::Display for Tweet {
@@ -83,3 +82,45 @@ where
     String::from("no")
 }
 
+// Trait as return type
+// Return any type that implements Summary
+fn _returns_summarizable() -> impl Summary {
+    // Tweet implements Summary
+    Tweet {
+        username: String::from("unknown"),
+        content: String::from("nothing."),
+        reply: false,
+        retweet: false,
+    }
+}
+
+struct _Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> _Pair<T> {
+    fn _new(x: T, y: T) -> Self {
+        Self { x, y }
+    }
+}
+
+// If type T implements Display and PartialOrd,
+// then implement method for Pair<T> instances
+impl <T: fmt::Display + PartialOrd> _Pair<T> {
+    fn _cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest number is x = {}", self.x);
+        } else {
+            println!("The largest number is y = {}", self.y);
+        }
+    }
+}
+
+// Blanket implementation
+// Implement trait for any type that implements a specific trait
+/*
+impl<T: fmt::Display> ToString for T {
+    // code...
+}
+*/
