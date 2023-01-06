@@ -134,7 +134,7 @@ use generics::{
     NewsArticle
 };
 
-fn main() {
+fn print_trait_examples() {
     let tweet = Tweet {
         username: String::from("rustacean123"),
         content: String::from("Have a good day!"),
@@ -159,6 +159,10 @@ fn main() {
 
     // Formatted output. Implements fmt::Display trait in lib.rs
     println!("tweet: {}", tweet);
+}
+
+fn main() {
+    print_trait_examples();
 }
 
 
