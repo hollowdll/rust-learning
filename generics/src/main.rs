@@ -164,5 +164,3 @@ fn print_trait_examples() {
 fn main() {
     print_trait_examples();
 }
-
-
