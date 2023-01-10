@@ -23,6 +23,22 @@ fn greeting(name: &str) -> String {
     return format!("Hello");
 }
 
+pub struct Guess {
+    value: i32,
+}
+
+impl Guess {
+    pub fn new(value: i32) -> Guess {
+        if value < 1 {
+            panic!("Guess value must be greater than or equal to 1, got {}", value);
+        } else if value > 100 {
+            panic!("Guess value must be less than or equal to 100, got {}", value);
+        }
+
+        Guess { value }
+    }
+}
+
 
 
 // Tests for this library crate
@@ -98,6 +114,24 @@ mod tests {
             "Greeting did not contain name, value was \"{}\"",
             result
         );
+    }
+
+    // Should panic attribute with expected parameter.
+    // Panic message must contain this value in order to pass the test
+    #[test]
+    #[should_panic(expected = "less than or equal to 100")]
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+
+    // Tests can also use Result<T, E> when they fail, not just panic
+    #[test]
+    fn it_works() -> Result<(), String> {
+        if 3 * 3 == 9 {
+            Ok(())
+        } else {
+            Err(String::from("3 times 3 does not equal 9"))
+        }
     }
 }
 
