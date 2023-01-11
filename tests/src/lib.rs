@@ -39,9 +39,16 @@ impl Guess {
     }
 }
 
+fn prints_and_returns_five(num: i32) -> i32 {
+    println!("I got the value {}", num);
+    5
+}
+
 
 
 // Tests for this library crate
+// This code only compiles if run with "test" configuration option.
+// Using cargo build does not compile tests, only cargo test does.
 #[cfg(test)]
 mod tests {
     // Include everything from parent module
@@ -132,6 +139,47 @@ mod tests {
         } else {
             Err(String::from("3 times 3 does not equal 9"))
         }
+    }
+
+    // Print text to the standard output.
+    // Use "-- --show-output" flag to see printed output.
+    #[test]
+    fn this_test_will_pass() {
+        let value = prints_and_returns_five(2);
+        assert_eq!(5, value);
+    }
+
+    #[test]
+    fn this_test_will_fail() {
+        let value = prints_and_returns_five(6);
+        assert_eq!(9, value);
+    }
+
+    // Run with "cargo test add" to run the following 3 tests.
+    // It will run all test functions that include "add"
+    // and filters out all other tests.
+    #[test]
+    fn add_five_and_five() {
+        assert_eq!(10, add_five(5));
+    }
+
+    #[test]
+    fn add_ten_and_five() {
+        assert_eq!(15, add_five(10));
+    }
+
+    #[test]
+    fn add_fifty_and_five() {
+        assert_eq!(55, add_five(50));
+    }
+
+    // Ignore this test
+    // Use "-- --ignored" flag to run ignored tests
+    // "-- --include-ignored" to include ignored tests
+    #[test]
+    #[ignore]
+    fn this_test_takes_time() {
+        // Code that takes a long time to run
     }
 }
 
