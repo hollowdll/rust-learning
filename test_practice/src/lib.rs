@@ -19,7 +19,7 @@ fn add_five(num: i32) -> i32 {
 }
 
 // This function's test is intended to fail
-fn greeting(name: &str) -> String {
+pub fn greeting(name: &str) -> String {
     return format!("Hello");
 }
 
@@ -110,6 +110,7 @@ mod tests {
         assert_eq!(15, add_five(10));
     }
 
+    /*
     // Edit greeting in crate root so this this fails
     #[test]
     fn greeting_contains_name() {
@@ -122,6 +123,7 @@ mod tests {
             result
         );
     }
+    */
 
     // Should panic attribute with expected parameter.
     // Panic message must contain this value in order to pass the test
@@ -149,11 +151,13 @@ mod tests {
         assert_eq!(5, value);
     }
 
+    /* 
     #[test]
     fn this_test_will_fail() {
         let value = prints_and_returns_five(6);
         assert_eq!(9, value);
     }
+    */
 
     // Run with "cargo test add" to run the following 3 tests.
     // It will run all test functions that include "add"
