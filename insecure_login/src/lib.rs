@@ -15,11 +15,11 @@ pub struct User {
 }
 
 impl User {
-    fn username(&self) -> &str {
+    pub fn username(&self) -> &str {
         &self.username
     }
 
-    fn password(&self) -> &str {
+    pub fn password(&self) -> &str {
         &self.password
     }
 }
