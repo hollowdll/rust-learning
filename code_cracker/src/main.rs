@@ -12,6 +12,7 @@ use rand::{
 };
 
 use std::time::Instant;
+use std::io;
 
 fn generate_rand_code(rng: &mut ThreadRng) -> u32 {
     println!("Generating random code...");
@@ -24,7 +25,7 @@ fn generate_rand_code(rng: &mut ThreadRng) -> u32 {
 }
 
 fn crack_with_range(code: &u32) {
-    println!("\x1b[93mCracking code...\x1b[0m");
+    println!("\nCracking code with range...");
 
     let start_time = Instant::now();
     
@@ -34,7 +35,7 @@ fn crack_with_range(code: &u32) {
 
     let elapsed = start_time.elapsed();
     
-    println!("Code cracked!");
+    println!("\x1b[93mCode cracked!\x1b[0m");
     println!("\x1b[93mCracked code:\x1b[0m {}", code);
     println!("Time elapsed: {:?}", elapsed);
     println!("Seconds: {}", elapsed.as_secs());
@@ -45,18 +46,16 @@ fn crack_with_range(code: &u32) {
 }
 
 fn crack_with_loop(code: &u32) {
-    // Todo
-    // Use loop instead of range
-
-    let start_time = Instant::now();
+    println!("\nCracking code with loop...");
 
     let mut attempt: u32 = 0;
+    let start_time = Instant::now();
 
     loop {    
         print!("{}\r", attempt);
 
         if attempt == *code {
-            println!("\x1b[93mCode cracked!\x1b[0m");    
+            println!("\x1b[93mCode cracked!\x1b[0m");
             break;
         }
         
@@ -78,6 +77,34 @@ fn main() {
     let mut rng = rand::thread_rng();
     let code = generate_rand_code(&mut rng);
 
-    // crack_with_range(&code);
-    // crack_with_loop(&code);
+    println!("Choose cracking method by typing its number:");
+    println!("1. Range");
+    println!("2. Loop");
+    println!("3. Range and loop");
+
+    let mut option = String::new();
+
+    io::stdin()
+        .read_line(&mut option)
+        .expect("Failed to read line!");
+        
+    let option: u32 = match option.trim().parse() {
+        Ok(num) => num,
+        Err(_) => panic!("Failed to parse!"),
+    };
+    
+    match option {
+        1 => {
+            crack_with_range(&code);
+        },
+        2 => {
+            crack_with_loop(&code);
+        },
+        3 => {
+            println!("Using range and loop...");
+            crack_with_range(&code);
+            crack_with_loop(&code);
+        },
+        _ => panic!("Invalid input!"),
+    }
 }
