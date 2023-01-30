@@ -44,14 +44,40 @@ fn crack_with_range(code: &u32) {
     println!("Nanosecond: {}", elapsed.as_nanos());
 }
 
-fn crack_with_loop() {
+fn crack_with_loop(code: &u32) {
     // Todo
     // Use loop instead of range
+
+    let start_time = Instant::now();
+
+    let mut attempt: u32 = 0;
+
+    loop {    
+        print!("{}\r", attempt);
+
+        if attempt == *code {
+            println!("\x1b[93mCode cracked!\x1b[0m");    
+            break;
+        }
+        
+        attempt += 1;
+    }
+
+    let elapsed = start_time.elapsed();
+
+    println!("\x1b[93mCracked code:\x1b[0m {}", code);
+    println!("Time elapsed: {:?}", elapsed);
+    println!("Seconds: {}", elapsed.as_secs());
+    println!("Exact seconds: {}", elapsed.as_secs_f64());
+    println!("Milliseconds: {}", elapsed.as_millis());
+    println!("Microsecond: {}", elapsed.as_micros());
+    println!("Nanosecond: {}", elapsed.as_nanos());
 }
 
 fn main() {
     let mut rng = rand::thread_rng();
     let code = generate_rand_code(&mut rng);
 
-    crack_with_range(&code);
+    // crack_with_range(&code);
+    // crack_with_loop(&code);
 }
