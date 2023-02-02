@@ -6,6 +6,16 @@
 
 #![allow(unused)]
 
+struct SomeSmartPointer {
+    data: String,
+}
+
+impl Drop for SomeSmartPointer {
+    fn drop(&mut self) {
+        println!("Dropping SomeSmartPointer with data {}", self.data);
+    }
+}
+
 // Box<T> stores and points to data on the heap memory
 fn use_case_one() {
     let num: u8 = 42;
@@ -16,6 +26,16 @@ fn use_case_one() {
     println!("store_text = {}", store_text);
 }
 
+fn drop_trait_demonstration() {
+    let x = SomeSmartPointer {
+        data: String::from("example 1"),
+    };
+    let y = SomeSmartPointer {
+        data: String::from("example 2"),
+    };
+    println!("Created SomeSmartPointers");
+}
+
 fn main() {
-    use_case_one();
+    drop_trait_demonstration();
 }
