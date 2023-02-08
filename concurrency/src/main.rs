@@ -13,7 +13,11 @@
 
 use std::thread;
 use std::time::Duration;
-use std::sync::mpsc;
+use std::sync::{
+    mpsc,
+    Mutex,
+    Arc,
+};
 
 fn thread_example() {
     let handle = thread::spawn(|| {
@@ -126,10 +130,48 @@ fn multiple_threads() {
     }
 }
 
+// Shared memory in concurrency
+// Mutex is a common way to do this
+// Mutex allows only one thread to access some data at a given time
+fn mutex_example() {
+    let mutex = Mutex::new(42);
+
+    {
+        let mut num = mutex.lock().unwrap();
+        *num = *num * 2;
+    }
+
+    println!("mutex = {:?}", mutex);
+}
+
+// Use Arc<T> smart pointer for thread type safety
+// and give value multiple owners
+fn shared_memory_with_mutex() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result: {}", *counter.lock().unwrap());
+}
+
 fn main() {
     // thread_example();
     // move_data();
     // simple_message_passing();
     // multiple_messages();
-    multiple_threads();
+    // multiple_threads();
+    shared_memory_with_mutex();
 }
