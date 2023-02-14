@@ -1,5 +1,6 @@
-// Simple blog post structure with state objects and
-// the state pattern which is object-oriented design pattern
+// Simple blog post structure with state objects
+// and the state pattern which is object-oriented design pattern
+// This could also use enums with match patterns
 
 pub struct Post {
     state: Option<Box<dyn State>>,
@@ -19,12 +20,18 @@ impl Post {
     }
 
     pub fn content(&self) -> &str {
-        return ""
+        self.state.as_ref().unwrap().content(self)
     }
 
     pub fn request_review(&mut self) {
-        if let Some(s) = self.state.take() {
-            self.state = Some(s.request_review())
+        if let Some(state) = self.state.take() {
+            self.state = Some(state.request_review())
+        }
+    }
+
+    pub fn approve(&mut self) {
+        if let Some(state) = self.state.take() {
+            self.state = Some(state.approve())
         }
     }
 }
@@ -32,12 +39,48 @@ impl Post {
 // All Post states implement this
 trait State {
     fn request_review(self: Box<Self>) -> Box<dyn State>;
+    fn approve(self: Box<Self>) -> Box<dyn State>;
+    fn content<'a>(&self, _post: &'a Post) -> &'a str {
+        return ""
+    }
 }
 
 struct Draft {}
 
 impl State for Draft {
     fn request_review(self: Box<Self>) -> Box<dyn State> {
+        Box::new(PendingReview {})
+    }
+
+    fn approve(self: Box<Self>) -> Box<dyn State> {
         self
+    }
+}
+
+struct PendingReview {}
+
+impl State for PendingReview {
+    fn request_review(self: Box<Self>) -> Box<dyn State> {
+        self
+    }
+
+    fn approve(self: Box<Self>) -> Box<dyn State> {
+        Box::new(Published {})
+    }
+}
+
+struct Published {}
+
+impl State for Published {
+    fn request_review(self: Box<Self>) -> Box<dyn State> {
+        self
+    }
+
+    fn approve(self: Box<Self>) -> Box<dyn State> {
+        self
+    }
+
+    fn content<'a>(&self, post: &'a Post) -> &'a str {
+        &post.content
     }
 }
