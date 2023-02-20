@@ -19,6 +19,7 @@ fn main() {
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
+        // Execute task in one of thread pool's threads
         pool.execute(|| {
             handle_connection(stream);
         });
