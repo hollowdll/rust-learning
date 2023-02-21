@@ -1,6 +1,5 @@
 // Web server runs on 127.0.0.1:7878 (localhost port 7878)
-// Uses thread pool model
-// WIP: Multithreaded model (not finished)
+// Uses thread pool model for multithreading
 
 use std::{
     fs,
