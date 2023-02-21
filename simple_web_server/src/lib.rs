@@ -44,6 +44,7 @@ impl ThreadPool {
         }
     }
 
+    /// Execute a task in one of the thread pool's threads
     pub fn execute<F>(&self, f: F)
     where
         F: FnOnce() + Send + 'static,
@@ -54,12 +55,26 @@ impl ThreadPool {
     }
 }
 
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        for worker in &mut self.workers {
+            println!("Shutting down worker {}", worker.id);
+
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
+        }
+    }
+}
+
 struct Worker {
     id: usize,
-    thread: thread::JoinHandle<()>,
+    thread: Option<thread::JoinHandle<()>>,
 }
 
 impl Worker {
+    // id is the id of the worker
+    // receiver receives sent tasks.
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Self {
         let thread = thread::spawn(move || loop {
             let job = receiver.lock().unwrap().recv().unwrap();
@@ -71,7 +86,7 @@ impl Worker {
 
         Self {
             id,
-            thread,
+            thread: Some(thread),
         }
     }
 }
