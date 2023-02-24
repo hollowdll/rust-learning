@@ -6,6 +6,7 @@
 
 #[derive(Debug)]
 pub struct DataStructure {
+    pub name: String,
     pub field_1: String,
     pub field_2: String,
     pub field_3: String,
@@ -13,6 +14,10 @@ pub struct DataStructure {
 }
 
 impl DataStructure {
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
     pub fn field_1(&self) -> &str {
         &self.field_1
     }
@@ -31,10 +36,37 @@ impl DataStructure {
 
     // Example for setters
     // pub fn field(&mut self, val: type)
-}
 
-impl DataStructure {
-    // Associated functions
+    pub fn draw(&self) {
+        // Disabled
+        /*
+        let name_len = self.name.chars().count();
+        let mut name_hyphens = String::from("");
+
+        for _ in 0..name_len {
+            name_hyphens += "-";
+        }
+        */
+
+        // Final output
+        println!(
+"
+------------------
+| Data Structure |
+------------------
+ name    | {}
+ field_1 | {}
+ field_2 | {}
+ field_3 | {}
+ field_4 | {}
+",
+self.name,
+self.field_1,
+self.field_2,
+self.field_3,
+self.field_4,
+        );
+    }
 }
 
 pub struct Config {}

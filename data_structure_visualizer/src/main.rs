@@ -8,6 +8,7 @@ use data_structure_visualizer::{
 
 fn main() {
     let data_structure = DataStructure {
+        name: String::from("Data structure name"),
         field_1: String::from("Some text"),
         field_2: String::from("Some text"),
         field_3: String::from("Some text"),
@@ -16,6 +17,7 @@ fn main() {
 
     // Debug print
     println!("{:?}", data_structure);
+    data_structure.draw();
 
     // Call draw/visualizer function
 }
