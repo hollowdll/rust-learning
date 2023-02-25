@@ -1,6 +1,6 @@
 // Small data structure visualizer.
 // Visualize data structures in your terminal
-// by drawing a small graph/table view of it.
+// by drawing a small table view of it.
 
 //#![allow(unused)]
 
@@ -34,25 +34,16 @@ impl DataStructure {
         &self.field_4
     }
 
-    // Example for setters
-    // pub fn field(&mut self, val: type)
-
+    /// Draw a table view of this data structure instance
+    /// in your terminal.
+    /// 
+    /// `Data Structure` text default output color is yellow.
+    /// It can be changed by modifying the escape characters.
     pub fn draw(&self) {
-        // Disabled
-        /*
-        let name_len = self.name.chars().count();
-        let mut name_hyphens = String::from("");
-
-        for _ in 0..name_len {
-            name_hyphens += "-";
-        }
-        */
-
-        // Final output
         println!(
 "
 ------------------
-| Data Structure |
+| \x1b[93mData Structure\x1b[0m |
 ------------------
  name    | {}
  field_1 | {}
@@ -69,21 +60,21 @@ self.field_4,
     }
 }
 
-pub struct Config {}
-
-impl Config {
-
-}
-
-pub struct DataStructurePool {}
-
-impl DataStructurePool {
-
-}
-
-
-
-#[cfg(test)]
-mod tests {
-
+impl DataStructure {
+    /// Draw a table view of this data structure
+    /// without creating an instance of it.
+    pub fn draw_structure() {
+        println!(
+"
+------------------
+| \x1b[93mData Structure\x1b[0m |
+------------------
+ name
+ field_1
+ field_2
+ field_3
+ field_4
+"
+        );
+    }
 }
